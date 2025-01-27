@@ -1,14 +1,32 @@
 import axios, { AxiosError } from "axios";
 
-export type CountryType = {
-  countryCode: "string";
-  name: "string";
+export type CountryBasicInfoType = {
+  countryCode: string;
+  name: string;
+};
+
+export type PopulationCountsType = {
+  year: number;
+  value: number;
 };
 
 type CountryInfo = {
-  countryInfo: any;
-  population: string | null;
+  countryInfo: {
+    commonName: string;
+    officialName: string;
+    countryCode: string;
+    region: string;
+    borders: BordersType[];
+  };
+  population: PopulationCountsType[] | null;
   flagUrl: string | undefined;
+};
+
+type BordersType = {
+  commonName: string;
+  countryCode: string;
+  officialName: string;
+  region: string;
 };
 
 const handleError = (error: AxiosError, defaultMessage: string) => {
@@ -20,7 +38,7 @@ const handleError = (error: AxiosError, defaultMessage: string) => {
 
 const CountriesService = {
   baseUrl: process.env.API_URL,
-  getAvailableCountries: async (): Promise<CountryType[]> => {
+  getAvailableCountries: async (): Promise<CountryBasicInfoType[]> => {
     try {
       const response = await axios.get(
         `${CountriesService.baseUrl}/countries/available-countries`

@@ -45,15 +45,16 @@ app.get(
       const flagData = await fetchData(flagUrl);
 
       const countryPopulation = populationData.data.find(
-        (item: { country: string }) => item.country === countryCode
+        (item: { country: string }) => item.country === countryInfo.commonName
       );
 
       res.json({
         countryInfo,
-        population: countryPopulation ? countryPopulation.population : null,
+        population: countryPopulation?.populationCounts ?? null,
+
         flagUrl: flagData.data.find(
-          (item: { country: string }) => item.country === countryCode
-        )?.imageUrl,
+          (item: { iso2: string }) => item.iso2 === countryCode
+        )?.flag,
       });
     } catch (error) {
       res.status(500).json({ error: "Unable to fetch country information" });
