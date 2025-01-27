@@ -23,7 +23,7 @@ Before getting started, ensure you have the following installed:
 Clone the repository to your local machine:
 
 ```bash
-git clone <repository_url>
+git clone https://github.com/Vovukanp31/developers-today
 cd my-project
 ```
 
